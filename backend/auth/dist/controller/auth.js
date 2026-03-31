@@ -20,3 +20,23 @@ export const loginUser = TryCatch(async (req, res) => {
         user,
     });
 });
+const allowerRoles = ["customer", "rider", "seller"];
+export const addUserRole = TryCatch(async (req, res) => {
+    if (!req.user?._id) {
+        return res.status(401).json({
+            message: "Unauthorized",
+        });
+    }
+    const { role } = req.body;
+    if (!allowerRoles.includes(role)) {
+        return res.status(400).json({
+            message: "Invalid role",
+        });
+    }
+    const user = await User.findByIdAndUpdate(req.user._id, { role }, { new: true });
+    if (!user) {
+        return res.status(404).json({
+            message: "User not found",
+        });
+    }
+});
