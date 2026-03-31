@@ -1,10 +1,9 @@
-import { Request, Response } from "express";
 import User from "../model/User.js";
 import jwt from "jsonwebtoken";
+import TryCatch from "../middlewares/trycatch.js";
 
-export const loginUser = async(req:Request, res: Response) => {
-    try{
-        const {email,name,picture} = req.body
+export const loginUser = TryCatch(async(req,res) =>{
+    const {email,name,picture} = req.body
 
         let user = await User.findOne({email});
         
@@ -19,7 +18,10 @@ export const loginUser = async(req:Request, res: Response) => {
         const token = jwt.sign({ user }, process.env.JWT_SEC as string, {
             expiresIn: "15d",
         });
-    }catch(error){
 
-    }
-};
+        res.status(200).json({
+            message: "Logged Success",
+            token,
+            user,
+        });
+})
