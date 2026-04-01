@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { authService } from "../main";
 import toast from "react-hot-toast";
 import { useGoogleLogin } from '@react-oauth/google';
+import { FcGoogle } from "react-icons/fc";
 
 const Login = () => {
     const [loading, setLoading] = useState(false);
@@ -43,7 +44,16 @@ const Login = () => {
             </p>
 
             <button onClick={googleLogin} disabled={loading} className="flex w-full items-center justify-center gap-3 rounded-xl border 
-            border-gray-300 bg-white px-4 py-3"></button>
+            border-gray-300 bg-white px-4 py-3">
+                <FcGoogle size={20}/>
+                {loading?"Signing in ...":"Continue with Google"}
+            </button>
+
+            <p className="text-center text-xs text-gray-400">
+                By continuing, you agree with our{" "}
+                <span className="text-[#E23774]">Terms of Service</span> &{" "}
+                <span className="text-[#E23774]">Privacy Policy</span>
+            </p>
         </div>
     </div>
   );
