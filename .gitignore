@@ -43,6 +43,11 @@ yarn-error.log*
 Thumbs.db
 
 # ================================
+# Sensitive Frontend Files
+# ================================
+frontend/src/main.tsx
+
+# ================================
 # IDE / Editor
 # ================================
 .vscode/

@@ -3,7 +3,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom";
 import { authService } from "../main";
 import toast from "react-hot-toast";
-import { GoogleLogin } from '@react-oauth/google';
+import { useGoogleLogin } from '@react-oauth/google';
 
 const Login = () => {
     const [loading, setLoading] = useState(false);
@@ -24,8 +24,29 @@ const Login = () => {
             toast.error("Problem while login");
             setLoading(false);
         }
-    }
-  return <div>login</div>;
+    };
+
+    const googleLogin=useGoogleLogin({
+         onSuccess: responseGoogle,
+         onError: responseGoogle,
+         flow: "auth-code",
+    })
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-white px-4">
+        <div className="w-full max-w-sm space-y-6">
+            <h1 className="text-center text-3xl font-bold text-[#E23774]">
+                Zoomato
+            </h1>
+
+            <p className="text-center text-sm text-gray-500">
+                Log in or sign up to continue
+            </p>
+
+            <button onClick={googleLogin} disabled={loading} className="flex w-full items-center justify-center gap-3 rounded-xl border 
+            border-gray-300 bg-white px-4 py-3"></button>
+        </div>
+    </div>
+  );
 }
 
 export default Login
