@@ -3,6 +3,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom";
 import { authService } from "../main";
 import toast from "react-hot-toast";
+import { GoogleLogin } from '@react-oauth/google';
 
 const Login = () => {
     const [loading, setLoading] = useState(false);
@@ -16,8 +17,12 @@ const Login = () => {
             });
             localStorage.setItem("token", result.data.token);
             toast.success(result.data.message);
+            setLoading(false);
+            navigate("/");
         } catch (error){
             console.error(error);
+            toast.error("Problem while login");
+            setLoading(false);
         }
     }
   return <div>login</div>;
