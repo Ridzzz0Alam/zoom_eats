@@ -13,6 +13,6 @@ createRoot(document.getElementById('root')!).render(
       <AppProvider>
         <App />
       </AppProvider>
-    </GoogleOAuthProvider>;
-  </StrictMode>,
+    </GoogleOAuthProvider>
+  </StrictMode>
 )
