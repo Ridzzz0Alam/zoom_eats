@@ -2,6 +2,7 @@ import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { useAppData } from "../context/AppContext"
 import { useEffect, useState } from "react";
 import { CgShoppingCart } from "react-icons/cg";
+import { BiMapPin } from "react-icons/bi";
 
 const Navbar = () => {
     const { isAuth } = useAppData();
@@ -42,10 +43,31 @@ const Navbar = () => {
                         0
                     </span>
                 </Link>
+
+                {isAuth ? (
+                    <Link to="/account" className="font-medium text-[#E23744]">
+                        Account
+                    </Link>
+                ) : (
+                    <Link to="/Login" className="font-medium text-[#E23744]">
+                        Login
+                    </Link>
+                )}
             </div>
         </div>
+
+        {/* search bar */}
+        {isHomePage && (
+            <div className="border-t px-4 py-3">
+                <div className="mx-auto flex max-w-7xl items-center rounded-lg border shadow-sm">
+                    <div className="flex items-center gap-2 px-3 border-r text-gray-700">
+                        <BiMapPin className="h-4 w-4 text-[#E23744]"/>
+                    </div>
+                </div>
+            </div>
+        )}
     </div>
-  )
-}
+  );
+};
 
 export default Navbar
