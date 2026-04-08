@@ -41,9 +41,8 @@ export const AppProvider = ({children }: AppProviderProps) =>{
     }, []);
 
     useEffect(() => {
-        if(!navigator.geolocation)
-            return alert("Please Allow Location to continue");
-        setLoading(true);
+        if(!navigator.geolocation) return alert("Please Allow Location to continue");
+        setLoadingLocation(true);
 
         navigator.geolocation.getCurrentPosition(async(position)=>{
             const {latitude, longitude} = position.coords;
@@ -57,7 +56,7 @@ export const AppProvider = ({children }: AppProviderProps) =>{
                 setLocation({
                     latitude,
                     longitude,
-                    formatedAddress: data.display_name || "current location"
+                    formattedAddress: data.display_name || "current location"
                 })
 
                 setCity(
@@ -71,7 +70,7 @@ export const AppProvider = ({children }: AppProviderProps) =>{
                 setLocation({
                     latitude,
                     longitude,
-                    formatedAddress: "Current Location",
+                    formattedAddress: "Current Location",
                 });
                 setCity("Failed to load");
             }
