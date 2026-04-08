@@ -40,6 +40,30 @@ export const AppProvider = ({children }: AppProviderProps) =>{
         fetchUser();
     }, []);
 
+    useEffect(() => {
+        if(!navigator.geolocation)
+            return alert("Please Allow Location to continue");
+        setLoading(true);
+
+        navigator.geolocation.getCurrentPosition(async(position)=>{
+            const {latitude, longitude} = position.coords;
+
+            try {
+                const res = await fetch(
+                    `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
+                );
+                const data = await res.json()
+
+                setLocation({
+                    latitude,
+                    longitude,
+                })
+            } catch (error) {
+                console.log(error);
+            }
+        });
+    });
+
     return (
     <AppContext.Provider 
         value={{isAuth, loading, setIsAuth, setLoading, setUser, user}}
