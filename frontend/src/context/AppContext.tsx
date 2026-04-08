@@ -1,7 +1,7 @@
 import axios from "axios";
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { authService } from "../main";
-import type { AppContextType, User } from "../types";
+import type { AppContextType, LocationData, User } from "../types";
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
@@ -14,7 +14,7 @@ export const AppProvider = ({children }: AppProviderProps) =>{
     const [isAuth, setIsAuth] = useState(false);
     const [loading, setLoading] = useState(true);
 
-    const [location, setLocation] = useState(null);
+    const [location, setLocation] = useState<LocationData | null>(null);
     const [loadingLocation, setLoadingLocation] = useState(false);
     const [city, setCity] = useState("Fetching Location...");
 
@@ -57,12 +57,26 @@ export const AppProvider = ({children }: AppProviderProps) =>{
                 setLocation({
                     latitude,
                     longitude,
+                    formatedAddress: data.display_name || "current location"
                 })
+
+                setCity(
+                    data.address.city || 
+                    data.address.town || 
+                    data.address.village || 
+                    "Your Location"
+                );
+
             } catch (error) {
-                console.log(error);
+                setLocation({
+                    latitude,
+                    longitude,
+                    formatedAddress: "Current Location",
+                });
+                setCity("Failed to load");
             }
         });
-    });
+    }, []);
 
     return (
     <AppContext.Provider 
