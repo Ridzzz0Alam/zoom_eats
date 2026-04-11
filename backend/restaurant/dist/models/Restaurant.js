@@ -78,5 +78,5 @@ const schema = new mongoose_1.Schema({
 }, {
     timestamps: true,
 });
-schema.index({ autoLocation: "2dspchere" });
+schema.index({ autoLocation: "2dsphere" });
 exports.default = mongoose_1.default.model("Restaurant", schema);
